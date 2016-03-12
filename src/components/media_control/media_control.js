@@ -217,9 +217,9 @@ export default class MediaControl extends UIObject {
   }
 
   mousemoveOnSeekBar(event) {
-    if (this.settings.seekEnabled) {
-      const offsetX = event.pageX - this.$seekBarContainer.offset().left - (this.$seekBarHover.width() / 2)
-      this.$seekBarHover.css({left: offsetX})
+    if (this.container.settings.seekEnabled) {
+      var offsetX = event.pageX - this.$seekBarContainer.offset().left
+      this.$seekBarHover.css({width: offsetX})
     }
     this.trigger(Events.MEDIACONTROL_MOUSEMOVE_SEEKBAR, event)
   }
@@ -630,11 +630,17 @@ export default class MediaControl extends UIObject {
 
   parseColors() {
     if (this.options.mediacontrol) {
-      this.buttonsColor = this.options.mediacontrol.buttons
-      const seekbarColor = this.options.mediacontrol.seekbar
+      var buttonsColor = this.options.mediacontrol.buttons
+      var seekbarColor = this.options.mediacontrol.seekbar
+      var seekbarFill = this.options.mediacontrol.fill
+      var seekbarBack = this.options.mediacontrol.back
       this.$el.find('.bar-fill-2[data-seekbar]').css('background-color', seekbarColor)
-      this.$el.find('.media-control-icon svg path').css('fill', this.buttonsColor)
-      this.$el.find('.segmented-bar-element[data-volume]').css('boxShadow', 'inset 2px 0 0 ' + this.buttonsColor)
+      this.$el.find('.bar-scrubber-icon[data-seekbar]').css('background-color', seekbarColor)
+      this.$el.find('.bar-fill-1[data-seekbar]').css('background-color', seekbarFill)
+      this.$el.find('.bar-background[data-seekbar]').css('background-color', seekbarBack)
+      this.$el.find('[data-media-control] > .media-control-icon, .drawer-icon').css('color', buttonsColor)
+      this.$el.find('.media-control-indicator').css('color', buttonsColor)
+      this.$el.find('.segmented-bar-element[data-volume]').css('boxShadow', "inset 2px 0 0 " + buttonsColor)
     }
   }
 
